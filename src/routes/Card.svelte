@@ -20,14 +20,18 @@
 	};
 
 	let AceEditor;
-	let purifyHTML;
 	onMount(async () => {
 		if (browser) {
 			await import('brace');
 			await import('brace/mode/html');
 			await import('brace/theme/monokai');
 			AceEditor = (await import('svelte-ace')).AceEditor;
+		}
+	});
 
+	let purifyHTML;
+	onMount(() => {
+		if (window) {
 			purifyHTML = DOMPurify(window);
 		}
 	});
@@ -38,28 +42,35 @@
 	let code = `<div class="size-full">\n\n</div>`;
 </script>
 
-<div class="flex w-1/2 flex-col items-center">
-	<h2>
+<div class="flex flex-col items-center">
+	<h2 class="text-3xl font-semibold">
 		{title}
 	</h2>
-	{#if purifyHTML}
-		{@html purifyHTML.sanitize(topWrapper + code + bottomWrapper)}
-	{/if}
-	<h3>HTML + Tailwind CSS</h3>
-	{#if AceEditor}
-		<code class="self-start text-xs text-gray-400">{topWrapper}</code>
-		<svelte:component
-			this={AceEditor}
-			lang="html"
-			theme="monokai"
-			bind:value={code}
-			width="100%"
-			height="300px"
-		/>
-		<code class="self-start text-xs text-gray-400">{bottomWrapper}</code>
-	{:else}
-		<div class="flex items-center justify-center" style={`width: 100%; heigth: ${editorHeight}`}>
-			<Spinner size="10" />
+	<div class="flex w-full flex-wrap items-center justify-around gap-8">
+		{#if purifyHTML}
+			{@html purifyHTML.sanitize(topWrapper + code + bottomWrapper)}
+		{/if}
+		<div>
+			<h3>HTML + Tailwind CSS</h3>
+			{#if AceEditor}
+				<code class="self-start text-xs text-gray-400">{topWrapper}</code>
+				<svelte:component
+					this={AceEditor}
+					lang="html"
+					theme="monokai"
+					bind:value={code}
+					width="100%"
+					height="300px"
+				/>
+				<code class="self-start text-xs text-gray-400">{bottomWrapper}</code>
+			{:else}
+				<div
+					class="flex items-center justify-center"
+					style={`width: 100%; heigth: ${editorHeight}`}
+				>
+					<Spinner size="10" color="primary" />
+				</div>
+			{/if}
 		</div>
-	{/if}
+	</div>
 </div>

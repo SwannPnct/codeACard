@@ -16,7 +16,7 @@
 			<Select class="mt-2" items={sizes} bind:value={size} />
 		</Label>
 	</div>
-	<div class="flex gap-4">
+	<div class="flex flex-col">
 		<Card title="Recto" {size} />
 		<Card title="Verso" {size} />
 	</div>
