@@ -6,7 +6,8 @@
 	import domtoimage from 'dom-to-image';
 
 	export let title;
-	export let size = 'vistaPrintStandard';
+	export let size;
+	export let defaultValue;
 
 	const editorHeight = '300px';
 	const sizes = {
@@ -31,6 +32,10 @@
 		link.click();
 	};
 
+	export const getValue = () => {
+		return code;
+	};
+
 	let AceEditor;
 	onMount(async () => {
 		if (browser) {
@@ -53,7 +58,7 @@
 
 	const unusedWrapperClass = 'class="border border-black border-dashed" >';
 
-	let code = `<div class="size-full bg-white">\n\n</div>`;
+	let code = defaultValue;
 </script>
 
 <div class="flex flex-col items-center">
