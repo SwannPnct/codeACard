@@ -4,6 +4,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import { defaultCode } from './cards.utils';
 	import { enhance } from '$app/forms';
+	import Error from '../../../lib/components/Error.svelte';
 
 	export let data;
 	export let form;
@@ -65,7 +66,7 @@
 			>
 		</div>
 		<div>
-			{#if form?.message}<strong class="text-red-600">{form.message}</strong>{/if}
+			{#if form?.message}<Error>{form.message}</Error>{/if}
 		</div>
 	</div>
 	<div class="flex flex-col">

@@ -1,6 +1,7 @@
 <script>
 	import CardListItem from './CardListItem.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import Error from '$lib/components/Error.svelte';
 
 	export let data;
 	export let form;
@@ -9,7 +10,7 @@
 <div>
 	<h1>Your cards</h1>
 	{#if data.error}
-		<strong class="text-red-600">{data.error.code} - {data.error.message}</strong>
+		<Error>{data.error.code} - {data.error.message}</Error>
 	{:else}
 		{#each data.cards as card}
 			<CardListItem {card} />
@@ -19,7 +20,7 @@
 		<Button type="submit">New Card</Button>
 		<div>
 			{#if form?.message}
-				<strong class="text-red-600">{form.message}</strong>
+				<Error>{form.message}</Error>
 			{/if}
 		</div>
 	</form>
