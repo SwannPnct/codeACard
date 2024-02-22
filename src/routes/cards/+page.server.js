@@ -3,7 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 export const load = async ({ locals: { supabase } }) => {
 	const { data, error } = await supabase
 		.from('cards')
-		.select('id,name,size,recto')
+		.select('id,name,size,recto,created_at')
 		.order('id', { ascending: false });
 
 	return { cards: data, error };

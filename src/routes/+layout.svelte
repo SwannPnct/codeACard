@@ -10,5 +10,7 @@
 	class="h-fit min-h-screen w-full bg-white font-mono text-black dark:bg-gray-800 dark:text-white"
 >
 	<Header {session} />
-	<slot />
+	<div class="size-full p-12">
+		<slot />
+	</div>
 </div>

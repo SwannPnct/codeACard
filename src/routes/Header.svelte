@@ -5,13 +5,13 @@
 	export let session;
 </script>
 
-<Navbar>
+<Navbar class="bg-gray-200">
 	<NavBrand href="/">
 		<span class="text-4xl font-semibold text-black dark:text-white">code_a_card</span>
 	</NavBrand>
+	<DarkMode btnClass="ml-auto" />
 	<NavHamburger />
-	<NavUl>
-		<DarkMode />
+	<NavUl class="ml-4">
 		{#if session}
 			<form method="POST" action="/auth?/signout">
 				<Button outline type="submit">Sign out</Button>

@@ -4,22 +4,13 @@
 	import { onMount } from 'svelte';
 	import DOMPurify from 'dompurify';
 	import domtoimage from 'dom-to-image';
+	import { sizes } from '../cards.utils';
 
 	export let title;
 	export let size;
 	export let defaultValue;
 
 	const editorHeight = '300px';
-	const sizes = {
-		vistaPrintStandard: {
-			width: '8.5cm',
-			height: '5.5cm'
-		},
-		vistaPrintSquare: {
-			width: '6.5cm',
-			height: '6.5cm'
-		}
-	};
 	const containerId = 'container';
 
 	export const download = async () => {
@@ -33,7 +24,7 @@
 	};
 
 	export const getValue = () => {
-		return code;
+		return purifyHTML?.sanitize(code);
 	};
 
 	let AceEditor;
@@ -56,7 +47,7 @@
 	$: topWrapper = `<div id="${containerId}" style="width:${sizes[size].width};height:${sizes[size].height}">`;
 	const bottomWrapper = '</div>';
 
-	const unusedWrapperClass = 'class="border border-black border-dashed" >';
+	const unusedWrapperClass = 'class="border border-black border-dashed dark:border-white" >';
 
 	let code = defaultValue;
 </script>

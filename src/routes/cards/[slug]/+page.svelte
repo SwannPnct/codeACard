@@ -2,7 +2,7 @@
 	import { Input, Label, Select } from 'flowbite-svelte';
 	import Card from './Card.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import { defaultCode } from './cards.utils';
+	import { defaultCode } from '../cards.utils';
 	import { enhance } from '$app/forms';
 	import Error from '../../../lib/components/Error.svelte';
 
