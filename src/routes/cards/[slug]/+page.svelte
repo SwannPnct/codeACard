@@ -1,6 +1,6 @@
 <script>
 	import { Input, Label, Select } from 'flowbite-svelte';
-	import Card from './Card.svelte';
+	import CardEditor from './CardEditor.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { defaultCode } from '../cards.utils';
 	import { enhance } from '$app/forms';
@@ -70,7 +70,17 @@
 		</div>
 	</div>
 	<div class="flex flex-col">
-		<Card title="Recto" {size} bind:this={recto} defaultValue={data.card.recto ?? defaultCode} />
-		<Card title="Verso" {size} bind:this={verso} defaultValue={data.card.verso ?? defaultCode} />
+		<CardEditor
+			title="Recto"
+			{size}
+			bind:this={recto}
+			defaultValue={data.card.recto ?? defaultCode}
+		/>
+		<CardEditor
+			title="Verso"
+			{size}
+			bind:this={verso}
+			defaultValue={data.card.verso ?? defaultCode}
+		/>
 	</div>
 </form>

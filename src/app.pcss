@@ -4,8 +4,8 @@
 @tailwind utilities;
 
 .card-list-item {
-	width: 200px;
-	height: 200px;
+	width: 300px;
+	height: 220px;
 	@apply rounded-xl;
 	@apply shadow-lg;
 	@apply bg-gray-700;
@@ -15,4 +15,15 @@
 	@apply transition-transform;
 	@apply hover:-rotate-3;
 	@apply cursor-pointer;
+
+	span {
+		@apply opacity-0;
+		@apply transition-opacity;
+	}
+}
+
+.card-list-item:hover {
+	span {
+		@apply opacity-100;
+	}
 }
