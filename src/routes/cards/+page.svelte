@@ -24,7 +24,11 @@
 			{#each data.cards as card}
 				<CardListItem {card} />
 			{/each}
-			<NewCard formClass="card-list-item opacity-50 !shadow-none" btnClass="size-full" {form} />
+			<NewCard
+				formClass="card-list-item opacity-50 hover:opacity-100 !shadow-none"
+				btnClass="size-full"
+				{form}
+			/>
 		</div>
 	{/if}
 </div>
