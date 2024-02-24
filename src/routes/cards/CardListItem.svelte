@@ -10,13 +10,13 @@
 	on:click={async () => await goto(`/cards/${card.id}`)}
 >
 	{@html `<div class="border shrink-0 border-black border-dashed dark:border-white origin-top self-center scale-75" style="width:${
-		sizes[card.size]?.width
-	};height:${sizes[card.size]?.height}">` +
+		sizes[card.size].width
+	};height:${sizes[card.size].height}">` +
 		card.recto +
 		'</div>'}
 	<div class="absolute flex size-full items-end">
 		<span>
-			{card.name ?? 'No name'}
+			{card.name || 'No name'}
 		</span>
 	</div>
 </button>

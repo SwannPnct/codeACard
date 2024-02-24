@@ -20,11 +20,11 @@
 	let verso;
 
 	let downloading = false;
+	let deleting = false;
 	let saving = false;
 
 	const onSubmit = ({ formData }) => {
 		saving = true;
-		formData.append('id', data.card.id);
 		formData.append('name', cardName);
 		formData.append('size', size);
 		formData.append('recto', recto.getValue());
@@ -42,9 +42,15 @@
 		await verso.download();
 		downloading = false;
 	};
+
+	$: {
+		if (form?.message) {
+			deleting = false;
+		}
+	}
 </script>
 
-<form class="flex flex-col gap-4 p-8" method="post" use:enhance={onSubmit}>
+<form class="flex flex-col gap-4 p-8" method="post" use:enhance={onSubmit} action="?/save">
 	<div class="flex w-full flex-wrap items-center gap-8">
 		<div>
 			<Label>
@@ -60,10 +66,24 @@
 		</div>
 		<div>
 			<Label class="mb-2">Actions</Label>
-			<Button type="submit" loading={saving} loadingMessage="Saving...">Save</Button>
-			<Button loading={downloading} loadingMessage="Downloading..." on:click={onDownload}
-				>Download</Button
-			>
+			<div class="flex gap-4">
+				<Button type="submit" loading={saving} loadingMessage="Saving...">Save</Button>
+				<Button loading={downloading} loadingMessage="Downloading..." on:click={onDownload}
+					>Download</Button
+				>
+				<form id="delete-form" method="post" action="?/delete">
+					<Button
+						color="red"
+						loading={deleting}
+						loadingMessage="Deleting..."
+						confirm
+						on:click={() => {
+							deleting = true;
+							document.getElementById('delete-form').submit();
+						}}>Delete</Button
+					>
+				</form>
+			</div>
 		</div>
 		<div>
 			{#if form?.message}<Error>{form.message}</Error>{/if}
