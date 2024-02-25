@@ -25,7 +25,7 @@
 				<CardListItem {card} />
 			{/each}
 			<NewCard
-				formClass="card-list-item opacity-50 hover:opacity-100 !shadow-none"
+				formClass="card-list-item opacity-50 hover:opacity-100 !shadow-none transition-opacity"
 				btnClass="size-full"
 				{form}
 			/>

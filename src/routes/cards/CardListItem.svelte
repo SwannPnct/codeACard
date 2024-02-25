@@ -15,8 +15,8 @@
 		card.recto +
 		'</div>'}
 	<div class="absolute flex size-full items-end">
-		<span>
+		<strong>
 			{card.name || 'No name'}
-		</span>
+		</strong>
 	</div>
 </button>

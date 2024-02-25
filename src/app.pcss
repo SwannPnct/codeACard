@@ -8,22 +8,21 @@
 	height: 220px;
 	@apply rounded-xl;
 	@apply shadow-lg;
-	@apply bg-gray-700;
-	@apply shadow-gray-700/50;
-	@apply dark:bg-gray-500;
-	@apply dark:shadow-gray-500/50;
+	@apply bg-gray-500;
+	@apply shadow-gray-500/50;
+	@apply hover:bg-gray-600;
 	@apply transition-transform;
 	@apply hover:-rotate-3;
 	@apply cursor-pointer;
 
-	span {
+	strong {
 		@apply opacity-0;
 		@apply transition-opacity;
 	}
 }
 
 .card-list-item:hover {
-	span {
+	strong {
 		@apply opacity-100;
 	}
 }
