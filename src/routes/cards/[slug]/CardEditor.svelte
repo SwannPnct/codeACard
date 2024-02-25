@@ -53,7 +53,7 @@
 </script>
 
 <div class="flex flex-col items-center">
-	<h2 class="self-start text-3xl font-semibold">
+	<h2 class="self-start text-2xl font-semibold">
 		{title}
 	</h2>
 	<div class="flex w-full flex-wrap items-center justify-around gap-8">

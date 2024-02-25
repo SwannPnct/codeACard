@@ -5,6 +5,7 @@
 	import { defaultCode } from '../cards.utils';
 	import { enhance } from '$app/forms';
 	import Error from '../../../lib/components/Error.svelte';
+	import { DownloadSolid, TrashBinSolid } from 'flowbite-svelte-icons';
 
 	export let data;
 	export let form;
@@ -16,6 +17,7 @@
 
 	let size = data.card.size ?? sizes[0].value;
 	let cardName = data.card.name ?? '';
+
 	let recto;
 	let verso;
 
@@ -50,7 +52,11 @@
 	}
 </script>
 
-<form class="flex flex-col gap-4 p-8" method="post" use:enhance={onSubmit} action="?/save">
+<form class="flex flex-col gap-6 p-8" method="post" use:enhance={onSubmit} action="?/save">
+	<div class="flex items-center gap-4">
+		<Button outline href="/cards" class="shrink-0">&#8592; Back</Button>
+		<h1 class="text-3xl font-semibold">{cardName}</h1>
+	</div>
 	<div class="flex w-full flex-wrap items-center gap-8">
 		<div>
 			<Label>
@@ -64,23 +70,33 @@
 				<Input class="mt-2" bind:value={cardName} />
 			</Label>
 		</div>
+		<div class="ml-auto" />
 		<div>
 			<Label class="mb-2">Actions</Label>
 			<div class="flex gap-4">
-				<Button type="submit" loading={saving} loadingMessage="Saving...">Save</Button>
-				<Button loading={downloading} loadingMessage="Downloading..." on:click={onDownload}
-					>Download</Button
+				<Button color="green" pill type="submit" loading={saving} loadingMessage="Saving..."
+					>Save</Button
+				>
+				<Button
+					title="Download"
+					color="purple"
+					pill
+					loading={downloading}
+					loadingMessage="Downloading..."
+					on:click={onDownload}><DownloadSolid /></Button
 				>
 				<form id="delete-form" method="post" action="?/delete">
 					<Button
+						title="Delete"
 						color="red"
 						loading={deleting}
 						loadingMessage="Deleting..."
 						confirm
+						pill
 						on:click={() => {
 							deleting = true;
 							document.getElementById('delete-form').submit();
-						}}>Delete</Button
+						}}><TrashBinSolid /></Button
 					>
 				</form>
 			</div>

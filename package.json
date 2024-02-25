@@ -46,6 +46,7 @@
 		"dompurify": "^3.0.8",
 		"flowbite": "^2.2.1",
 		"flowbite-svelte": "^0.44.20",
+		"flowbite-svelte-icons": "^1.4.0",
 		"npm-check": "^6.0.1",
 		"svelte-ace": "^1.0.21",
 		"tailwind-merge": "^2.1.0"
