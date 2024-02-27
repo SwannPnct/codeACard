@@ -10,3 +10,6 @@ export const sizes = {
 		height: '6.5cm'
 	}
 };
+
+export const unsavedClass =
+	'shrink-0 border border-black border-dashed dark:border-white overflow-hidden';

@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import DOMPurify from 'dompurify';
 	import domtoimage from 'dom-to-image';
-	import { sizes } from '../cards.utils';
+	import { sizes, unsavedClass } from '../cards.utils';
 
 	export let title;
 	export let size;
@@ -44,28 +44,28 @@
 		}
 	});
 
-	$: topWrapper = `<div id="${containerId}" style="width:${sizes[size].width};height:${sizes[size].height}">`;
+	$: topWrapper = `<div id="${containerId}" style="width:${sizes[size].width}; height:${sizes[size].height}">`;
 	const bottomWrapper = '</div>';
 
-	const unusedWrapperClass = 'class="border border-black border-dashed dark:border-white" >';
+	const unsavedWrapperClass = `class="${unsavedClass}" >`;
 
 	let code = defaultValue;
 </script>
 
 <div class="flex flex-col items-center">
-	<h2 class="self-start text-2xl font-semibold">
+	<h2 class="self-start">
 		{title}
 	</h2>
 	<div class="flex w-full flex-wrap items-center justify-around gap-8">
 		{#if purifyHTML}
 			{@html purifyHTML.sanitize(
-				topWrapper.replace('>', unusedWrapperClass) + code + bottomWrapper
+				topWrapper.replace('>', unsavedWrapperClass) + code + bottomWrapper
 			)}
 		{/if}
-		<div class="w-1/2">
+		<div>
 			<h3>HTML + Tailwind CSS</h3>
 			{#if AceEditor}
-				<code class="self-start text-xs text-gray-400">{topWrapper}</code>
+				<code class="self-start text-balance text-xs text-gray-400">{topWrapper}</code>
 				<svelte:component
 					this={AceEditor}
 					lang="html"
@@ -74,7 +74,7 @@
 					width="100%"
 					height="300px"
 				/>
-				<code class="self-start text-xs text-gray-400">{bottomWrapper}</code>
+				<code class="self-start text-balance text-xs text-gray-400">{bottomWrapper}</code>
 			{:else}
 				<div
 					class="flex items-center justify-center"

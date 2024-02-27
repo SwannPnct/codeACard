@@ -6,6 +6,7 @@
 	import { enhance } from '$app/forms';
 	import Error from '../../../lib/components/Error.svelte';
 	import { DownloadSolid, TrashBinSolid } from 'flowbite-svelte-icons';
+	import LabeledContainer from './LabeledContainer.svelte';
 
 	export let data;
 	export let form;
@@ -52,55 +53,52 @@
 	}
 </script>
 
-<form class="flex flex-col gap-6 p-8" method="post" use:enhance={onSubmit} action="?/save">
-	<div class="flex items-center gap-4">
+<form class="flex flex-col gap-16 p-8" method="post" use:enhance={onSubmit} action="?/save">
+	<div class="flex flex-wrap items-center gap-x-8 gap-y-2">
 		<Button outline href="/cards" class="shrink-0">&#8592; Back</Button>
-		<h1 class="text-3xl font-semibold">{cardName}</h1>
+		<h1>{cardName}</h1>
 	</div>
-	<div class="flex w-full flex-wrap items-center gap-8">
-		<div>
-			<Label>
-				Select a size
-				<Select class="mt-2" items={sizes} bind:value={size} />
-			</Label>
-		</div>
-		<div>
-			<Label>
-				Name
-				<Input class="mt-2" bind:value={cardName} />
-			</Label>
-		</div>
-		<div class="ml-auto" />
-		<div>
-			<Label class="mb-2">Actions</Label>
-			<div class="flex gap-4">
-				<Button color="green" pill type="submit" loading={saving} loadingMessage="Saving..."
-					>Save</Button
-				>
-				<Button
-					title="Download"
-					color="purple"
-					pill
-					loading={downloading}
-					loadingMessage="Downloading..."
-					on:click={onDownload}><DownloadSolid /></Button
-				>
-				<form id="delete-form" method="post" action="?/delete">
-					<Button
-						title="Delete"
-						color="red"
-						loading={deleting}
-						loadingMessage="Deleting..."
-						confirm
-						pill
-						on:click={() => {
-							deleting = true;
-							document.getElementById('delete-form').submit();
-						}}><TrashBinSolid /></Button
-					>
-				</form>
+	<div class="flex w-full flex-wrap gap-8">
+		<LabeledContainer label="Settings" overrideClass="mr-auto flex flex-wrap gap-x-8 gap-y-2">
+			<div>
+				<Label>
+					Select a size
+					<Select class="mt-2" items={sizes} bind:value={size} />
+				</Label>
 			</div>
-		</div>
+			<div>
+				<Label>
+					Name
+					<Input class="mt-2" bind:value={cardName} />
+				</Label>
+			</div>
+		</LabeledContainer>
+		<LabeledContainer label="Actions" overrideClass="flex gap-4 flex-wrap">
+			<Button color="green" pill type="submit" loading={saving} loadingMessage="Saving..."
+				><strong>Save</strong></Button
+			>
+			<Button
+				title="Download"
+				pill
+				loading={downloading}
+				loadingMessage="Downloading..."
+				on:click={onDownload}><DownloadSolid /></Button
+			>
+			<form id="delete-form" method="post" action="?/delete">
+				<Button
+					title="Delete"
+					color="red"
+					loading={deleting}
+					loadingMessage="Deleting..."
+					confirm
+					pill
+					on:click={() => {
+						deleting = true;
+						document.getElementById('delete-form').submit();
+					}}><TrashBinSolid /></Button
+				>
+			</form>
+		</LabeledContainer>
 		<div>
 			{#if form?.message}<Error>{form.message}</Error>{/if}
 		</div>

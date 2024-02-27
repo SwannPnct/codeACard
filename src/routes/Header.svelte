@@ -7,7 +7,7 @@
 
 <Navbar class="bg-gray-200">
 	<NavBrand href="/">
-		<span class="text-4xl font-semibold text-black dark:text-white">code_a_card</span>
+		<span class="text-2xl font-semibold text-black md:text-4xl dark:text-white">codeACard</span>
 	</NavBrand>
 	<DarkMode btnClass="ml-auto" />
 	<NavHamburger />

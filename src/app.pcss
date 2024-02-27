@@ -4,8 +4,10 @@
 @tailwind utilities;
 
 .card-list-item {
-	width: 300px;
-	height: 220px;
+	@apply w-52;
+	@apply h-36;
+	@apply md:w-80;
+	@apply md:h-56;
 	@apply rounded-xl;
 	@apply shadow-lg;
 	@apply bg-gray-500;
@@ -14,15 +16,16 @@
 	@apply transition-transform;
 	@apply hover:-rotate-3;
 	@apply cursor-pointer;
-
-	strong {
-		@apply opacity-0;
-		@apply transition-opacity;
-	}
 }
 
-.card-list-item:hover {
-	strong {
-		@apply opacity-100;
-	}
+h1 {
+	@apply text-xl;
+	@apply md:text-3xl;
+	@apply font-semibold;
+}
+
+h2 {
+	@apply text-lg;
+	@apply md:text-2xl;
+	@apply font-semibold;
 }
