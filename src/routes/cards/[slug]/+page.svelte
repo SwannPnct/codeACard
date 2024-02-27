@@ -56,7 +56,7 @@
 <form class="flex flex-col gap-16 p-8" method="post" use:enhance={onSubmit} action="?/save">
 	<div class="flex flex-wrap items-center gap-x-8 gap-y-2">
 		<Button outline href="/cards" class="shrink-0">&#8592; Back</Button>
-		<h1>{cardName}</h1>
+		<h1>{cardName || 'No name'}</h1>
 	</div>
 	<div class="flex w-full flex-wrap gap-8">
 		<LabeledContainer label="Settings" overrideClass="mr-auto flex flex-wrap gap-x-8 gap-y-2">

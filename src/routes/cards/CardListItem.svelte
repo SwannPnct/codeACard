@@ -12,7 +12,7 @@
 	{@html `<div class="${unsavedClass} origin-top self-center scale-50 md:scale-75" style="width:${
 		sizes[card.size].width
 	};height:${sizes[card.size].height}">` +
-		card.recto +
+		(card.recto ?? '') +
 		'</div>'}
 	<div class="absolute flex size-full items-end">
 		<strong class="text-xs md:text-base">

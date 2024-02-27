@@ -7,11 +7,13 @@
 	export let loading = false;
 	export let loadingMessage = 'Loading...';
 	export let confirm = false;
+	export let confirmMessage = 'Are you sure?';
 
 	let openModal = false;
 
-	const onClick = () => {
+	const onClick = (e) => {
 		if (confirm) {
+			e.preventDefault();
 			openModal = true;
 		} else {
 			dispatch('click');
@@ -28,7 +30,7 @@
 </Button>
 
 <Modal bind:open={openModal} autoclose size="sm" dismissable={false}>
-	<div class="w-full text-center">Are you sure?</div>
+	<div class="w-full text-center">{confirmMessage}</div>
 	<svelte:fragment slot="footer">
 		<div class="flex w-full justify-around">
 			<svelte:self>No</svelte:self>
