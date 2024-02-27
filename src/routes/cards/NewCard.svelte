@@ -9,6 +9,7 @@
 	export let btnClass = '';
 	export let formClass = '';
 
+	let adding = false;
 	let shouldConfirmMobile = false;
 
 	onMount(() => {
@@ -22,9 +23,12 @@
 	<Button
 		class={btnClass}
 		type="submit"
+		loading={adding}
+		loadingMessage="Adding..."
 		confirm={shouldConfirmMobile}
 		confirmMessage="The card editor is close to unusable on this type of device, are you sure?"
 		on:click={() => {
+			adding = true;
 			document.getElementById('addnew').submit();
 		}}>{title}</Button
 	>
