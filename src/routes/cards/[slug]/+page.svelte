@@ -59,7 +59,7 @@
 		<h1>{cardName || 'No name'}</h1>
 	</div>
 	<div class="flex w-full flex-wrap gap-8">
-		<LabeledContainer label="Settings" overrideClass="mr-auto flex flex-wrap gap-x-8 gap-y-2">
+		<LabeledContainer label="Settings" overrideClass="flex flex-wrap gap-x-8 gap-y-2">
 			<div>
 				<Label>
 					Select a size
@@ -103,18 +103,32 @@
 			{#if form?.message}<Error>{form.message}</Error>{/if}
 		</div>
 	</div>
-	<div class="flex flex-col">
+	<LabeledContainer label="Help" overrideClass="text-xs md:text-sm break-words max-w-96">
+		<p>
+			The cards have an initial and uneditable style used for specific sizing and to avoid the card
+			to shrink or grow. Those will be remove on download.
+		</p>
+		<p>
+			Code the rest, using plain HTML and <a
+				class="underline"
+				href="https://tailwindcss.com/docs/installation">Tailwind CSS</a
+			>.
+		</p>
+	</LabeledContainer>
+	<div class="flex flex-col gap-24">
 		<CardEditor
 			title="Recto"
 			{size}
 			bind:this={recto}
 			defaultValue={data.card.recto ?? defaultCode}
+			{cardName}
 		/>
 		<CardEditor
 			title="Verso"
 			{size}
 			bind:this={verso}
 			defaultValue={data.card.verso ?? defaultCode}
+			{cardName}
 		/>
 	</div>
 </form>
