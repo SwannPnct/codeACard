@@ -4,7 +4,7 @@ export const load = async ({ locals: { supabase } }) => {
 	const { data, error } = await supabase
 		.from('cards')
 		.select('id,name,size,recto,created_at')
-		.order('id', { ascending: false });
+		.order('created_at', { ascending: true });
 
 	return { cards: data, error };
 };

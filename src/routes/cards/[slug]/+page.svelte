@@ -50,18 +50,18 @@
 		};
 	};
 
-	const onDownload = async () => {
-		downloading = true;
-		await recto.download();
-		await verso.download();
-		downloading = false;
-	};
-
 	const appendFormData = (formData) => {
 		formData.append('name', cardName);
 		formData.append('size', size);
 		formData.append('recto', recto.getValue());
 		formData.append('verso', verso.getValue());
+	};
+
+	const onDownload = async () => {
+		downloading = true;
+		await recto.download();
+		await verso.download();
+		downloading = false;
 	};
 
 	$: {
