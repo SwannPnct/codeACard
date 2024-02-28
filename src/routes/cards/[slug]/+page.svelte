@@ -7,6 +7,7 @@
 	import Error from '../../../lib/components/Error.svelte';
 	import { DownloadSolid, TrashBinSolid } from 'flowbite-svelte-icons';
 	import LabeledContainer from './LabeledContainer.svelte';
+	import { goto } from '$app/navigation';
 
 	export let data;
 	export let form;
@@ -25,17 +26,27 @@
 	let downloading = false;
 	let deleting = false;
 	let saving = false;
+	let backing = false;
 
-	const onSubmit = ({ formData }) => {
+	const onSave = ({ formData }) => {
 		saving = true;
-		formData.append('name', cardName);
-		formData.append('size', size);
-		formData.append('recto', recto.getValue());
-		formData.append('verso', verso.getValue());
+		appendFormData(formData);
 
 		return async ({ update }) => {
 			await update({ reset: false });
 			saving = false;
+		};
+	};
+
+	const onBack = ({ formData }) => {
+		backing = true;
+		appendFormData(formData);
+
+		return async ({ update, result }) => {
+			await update();
+			if (!['error', 'failure'].includes(result.type)) {
+				await goto('/cards');
+			}
 		};
 	};
 
@@ -46,6 +57,13 @@
 		downloading = false;
 	};
 
+	const appendFormData = (formData) => {
+		formData.append('name', cardName);
+		formData.append('size', size);
+		formData.append('recto', recto.getValue());
+		formData.append('verso', verso.getValue());
+	};
+
 	$: {
 		if (form?.message) {
 			deleting = false;
@@ -53,13 +71,18 @@
 	}
 </script>
 
-<form class="flex flex-col gap-16 p-8" method="post" use:enhance={onSubmit} action="?/save">
+<form class="flex flex-col gap-16 p-8" method="post" use:enhance={onSave} action="?/save">
 	<div class="flex flex-wrap items-center gap-x-8 gap-y-2">
-		<Button outline href="/cards" class="shrink-0">&#8592; Back</Button>
+		<form method="post" use:enhance={onBack} action="?/save">
+			<Button type="submit" loading={backing} loadingMessage="Saving..." outline class="shrink-0"
+				>&#8592; Back</Button
+			>
+		</form>
 		<h1>{cardName || 'No name'}</h1>
 	</div>
+	{#if form?.message}<div><Error>{form.message}</Error></div>{/if}
 	<div class="flex w-full flex-wrap gap-8">
-		<LabeledContainer label="Settings" overrideClass="flex flex-wrap gap-x-8 gap-y-2">
+		<LabeledContainer label="Settings" overrideClass="flex flex-wrap gap-x-8 gap-y-2 mr-auto">
 			<div>
 				<Label>
 					Select a size
@@ -99,20 +122,14 @@
 				>
 			</form>
 		</LabeledContainer>
-		<div>
-			{#if form?.message}<Error>{form.message}</Error>{/if}
-		</div>
 	</div>
-	<LabeledContainer label="Help" overrideClass="text-xs md:text-sm break-words max-w-96">
-		<p>
+	<LabeledContainer label="Help" overrideClass="break-words max-w-[600px]">
+		<p class="text-xs md:text-sm">
 			The cards have an initial and uneditable style used for specific sizing and to avoid the card
 			to shrink or grow. Those will be remove on download.
-		</p>
-		<p>
-			Code the rest, using plain HTML and <a
-				class="underline"
-				href="https://tailwindcss.com/docs/installation">Tailwind CSS</a
-			>.
+			<br />
+			Code the rest, using plain HTML and
+			<a class="underline" href="https://tailwindcss.com/docs/installation">Tailwind CSS</a>.
 		</p>
 	</LabeledContainer>
 	<div class="flex flex-col gap-24">

@@ -5,7 +5,7 @@
 	const dispatch = createEventDispatcher();
 
 	export let loading = false;
-	export let loadingMessage = 'Loading...';
+	export let loadingMessage = '';
 	export let confirm = false;
 	export let confirmMessage = 'Are you sure?';
 
@@ -23,7 +23,10 @@
 
 <Button {...$$restProps} on:click={onClick}>
 	{#if loading}
-		<Spinner class="me-3" size="4" color="white" /> {loadingMessage}
+		<Spinner class="me-3" size="4" color="white" />
+	{/if}
+	{#if loading && loadingMessage}
+		{loadingMessage}
 	{:else}
 		<slot />
 	{/if}
