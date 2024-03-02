@@ -2,6 +2,7 @@
 	import { Navbar, NavHamburger, NavUl, Button, NavBrand } from 'flowbite-svelte';
 	import { DarkMode } from 'flowbite-svelte';
 	import SigninWithGithub from './SigninWithGithub.svelte';
+	import Form from '$lib/components/Form.svelte';
 
 	export let session;
 </script>
@@ -14,9 +15,9 @@
 	<NavHamburger />
 	<NavUl class="ml-4">
 		{#if session}
-			<form method="POST" action="/auth?/signout">
+			<Form action="/auth?/signout">
 				<Button outline type="submit">Sign out</Button>
-			</form>
+			</Form>
 		{:else}
 			<SigninWithGithub />
 		{/if}

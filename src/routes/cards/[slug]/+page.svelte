@@ -3,14 +3,13 @@
 	import CardEditor from './CardEditor.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { defaultCode } from '../cards.utils';
-	import { enhance } from '$app/forms';
-	import Error from '../../../lib/components/Error.svelte';
+	import Error from '$lib/components/Error.svelte';
 	import { DownloadSolid, TrashBinSolid } from 'flowbite-svelte-icons';
 	import LabeledContainer from './LabeledContainer.svelte';
 	import { goto } from '$app/navigation';
+	import Form from '$lib/components/Form.svelte';
 
 	export let data;
-	export let form;
 
 	const sizes = [
 		{ value: 'vistaPrintStandard', name: 'Standard (85 x 55 mm)' },
@@ -24,33 +23,8 @@
 	let verso;
 
 	let downloading = false;
-	let deleting = false;
-	let saving = false;
-	let backing = false;
 
-	const onSave = ({ formData }) => {
-		saving = true;
-		appendFormData(formData);
-
-		return async ({ update }) => {
-			await update({ reset: false });
-			saving = false;
-		};
-	};
-
-	const onBack = ({ formData }) => {
-		backing = true;
-		appendFormData(formData);
-
-		return async ({ update, result }) => {
-			await update();
-			if (!['error', 'failure'].includes(result.type)) {
-				await goto('/cards');
-			}
-		};
-	};
-
-	const appendFormData = (formData) => {
+	const appendFormData = ({ formData }) => {
 		formData.append('name', cardName);
 		formData.append('size', size);
 		formData.append('recto', recto.getValue());
@@ -63,24 +37,26 @@
 		await verso.download();
 		downloading = false;
 	};
-
-	$: {
-		if (form?.message) {
-			deleting = false;
-		}
-	}
 </script>
 
-<form class="flex flex-col gap-16 p-8" method="post" use:enhance={onSave} action="?/save">
+<div class="flex flex-col gap-16 p-8">
 	<div class="flex flex-wrap items-center gap-x-8 gap-y-2">
-		<form method="post" use:enhance={onBack} action="?/save">
+		<Form
+			let:loading={backing}
+			action="?/save"
+			prehandler={appendFormData}
+			posthandler={async ({ result }) => {
+				if (!['error', 'failure'].includes(result.type)) {
+					await goto('/cards');
+				}
+			}}
+		>
 			<Button type="submit" loading={backing} loadingMessage="Saving..." outline class="shrink-0"
 				>&#8592; Back</Button
 			>
-		</form>
+		</Form>
 		<h1>{cardName || 'No name'}</h1>
 	</div>
-	{#if form?.message}<div><Error>{form.message}</Error></div>{/if}
 	<div class="flex w-full flex-wrap gap-8">
 		<LabeledContainer label="Settings" overrideClass="flex flex-wrap gap-x-8 gap-y-2 mr-auto">
 			<div>
@@ -97,9 +73,11 @@
 			</div>
 		</LabeledContainer>
 		<LabeledContainer label="Actions" overrideClass="flex gap-4 flex-wrap">
-			<Button color="green" pill type="submit" loading={saving} loadingMessage="Saving..."
-				><strong>Save</strong></Button
-			>
+			<Form let:loading={saving} prehandler={appendFormData} action="?/save">
+				<Button color="green" pill type="submit" loading={saving} loadingMessage="Saving...">
+					<strong>Save</strong>
+				</Button>
+			</Form>
 			<Button
 				title="Download"
 				pill
@@ -107,20 +85,23 @@
 				loadingMessage="Downloading..."
 				on:click={onDownload}><DownloadSolid /></Button
 			>
-			<form id="delete-form" method="post" action="?/delete">
+			<Form
+				action="?/delete"
+				let:loading={deleting}
+				confirm
+				confirmMessage="Are you sure to delete this card?"
+			>
 				<Button
 					title="Delete"
 					color="red"
 					loading={deleting}
 					loadingMessage="Deleting..."
-					confirm
 					pill
-					on:click={() => {
-						deleting = true;
-						document.getElementById('delete-form').submit();
-					}}><TrashBinSolid /></Button
+					type="submit"
 				>
-			</form>
+					<TrashBinSolid />
+				</Button>
+			</Form>
 		</LabeledContainer>
 	</div>
 	<LabeledContainer label="Help" overrideClass="break-words max-w-[600px]">
@@ -148,4 +129,4 @@
 			{cardName}
 		/>
 	</div>
-</form>
+</div>
