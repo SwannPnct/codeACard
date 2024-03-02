@@ -10,6 +10,7 @@
 		loading = true;
 
 		if (confirm && !window?.confirm(confirmMessage)) {
+			loading = false;
 			return cancel();
 		}
 
