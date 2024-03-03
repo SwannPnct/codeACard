@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import Form from '$lib/components/Form.svelte';
+	import { goto } from '$app/navigation';
 
 	export let title = '+ New';
 	export let btnClass = '';
@@ -22,8 +23,12 @@
 	confirmMessage="The card editor is close to unusable on this type of device, are you sure?"
 	class={formClass}
 	action="?/add"
+	onSuccess={async ({ result }) => {
+		await goto(result.data.goto);
+	}}
 	let:loading={adding}
 >
-	<Button class={btnClass} type="submit" loading={adding} loadingMessage="Adding...">{title}</Button
-	>
+	<Button class={btnClass} type="submit" loading={adding} loadingMessage="Adding...">
+		{title}
+	</Button>
 </Form>

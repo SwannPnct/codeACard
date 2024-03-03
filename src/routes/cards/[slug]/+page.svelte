@@ -3,7 +3,6 @@
 	import CardEditor from './CardEditor.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { defaultCode } from '../cards.utils';
-	import Error from '$lib/components/Error.svelte';
 	import { DownloadSolid, TrashBinSolid } from 'flowbite-svelte-icons';
 	import LabeledContainer from './LabeledContainer.svelte';
 	import { goto } from '$app/navigation';
@@ -45,10 +44,8 @@
 			let:loading={backing}
 			action="?/save"
 			prehandler={appendFormData}
-			posthandler={async ({ result }) => {
-				if (!['error', 'failure'].includes(result.type)) {
-					await goto('/cards');
-				}
+			onSuccess={async () => {
+				await goto('/cards');
 			}}
 		>
 			<Button type="submit" loading={backing} loadingMessage="Saving..." outline class="shrink-0"
@@ -90,6 +87,9 @@
 				let:loading={deleting}
 				confirm
 				confirmMessage="Are you sure to delete this card?"
+				onSuccess={async () => {
+					await goto('/cards');
+				}}
 			>
 				<Button
 					title="Delete"

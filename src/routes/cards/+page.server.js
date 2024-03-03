@@ -1,4 +1,5 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
+import { success } from '$lib/utils/server.utils';
 
 export const load = async ({ locals: { supabase } }) => {
 	const { data, error } = await supabase
@@ -14,10 +15,10 @@ export const actions = {
 		const { data, error } = await supabase.from('cards').insert({}).select();
 		if (error) {
 			return fail(400, {
-				message: error.message
+				message: 'Card failed to be added'
 			});
 		} else {
-			redirect(303, `/cards/${data[0].id}`);
+			return success('Card was successfully added', { goto: `/cards/${data[0].id}` });
 		}
 	}
 };

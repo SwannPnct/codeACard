@@ -1,4 +1,5 @@
-import { error, fail, redirect } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
+import { success } from '$lib/utils/server.utils';
 
 export const load = async ({ params, locals: { supabase } }) => {
 	const { data, error: supaError } = await supabase.from('cards').select().eq('id', params.slug);
@@ -26,8 +27,10 @@ export const actions = {
 
 		if (error) {
 			return fail(400, {
-				message: error.message
+				message: 'Card failed to save'
 			});
+		} else {
+			return success('Card was successfully saved');
 		}
 	},
 	delete: async ({ params, locals: { supabase } }) => {
@@ -35,10 +38,10 @@ export const actions = {
 
 		if (error) {
 			return fail(400, {
-				message: error.message
+				message: 'Card failed to delete'
 			});
 		} else {
-			redirect('301', '/cards');
+			return success('Card was successfully deleted');
 		}
 	}
 };
