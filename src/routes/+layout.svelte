@@ -4,6 +4,7 @@
 	import Header from './Header.svelte';
 	import message from '$lib/stores/message.store';
 	import Toast from './Toast.svelte';
+	import Footer from './Footer.svelte';
 
 	setContext('message', message);
 
@@ -18,5 +19,6 @@
 	<div class="size-full px-2 py-8 sm:px-4 md:px-12">
 		<slot />
 	</div>
+	<Footer />
 	<Toast />
 </div>
