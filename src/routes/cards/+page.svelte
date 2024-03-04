@@ -7,8 +7,8 @@
 </script>
 
 <div>
-	<div class="flex gap-12">
-		<h1 class="mb-16">Your cards</h1>
+	<div class="mb-12 flex items-center gap-8 md:gap-12">
+		<h1>Your cards</h1>
 		{#if data?.cards?.length !== 0}
 			<NewCard />
 		{/if}

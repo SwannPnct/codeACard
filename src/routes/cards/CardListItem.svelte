@@ -1,6 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { sizes, unsavedClass } from './cards.utils';
+	import CardFrame from './CardFrame.svelte';
 
 	export let card;
 </script>
@@ -9,11 +9,13 @@
 	class="card-list-item relative block flex flex-col p-4"
 	on:click={async () => await goto(`/cards/${card.id}`)}
 >
-	{@html `<div class="${unsavedClass} origin-top self-center scale-50 md:scale-75" style="width:${
-		sizes[card.size].width
-	};height:${sizes[card.size].height}">` +
-		(card.recto ?? '') +
-		'</div>'}
+	<CardFrame
+		title="Recto"
+		size={card.size}
+		purifiedCode={card.recto}
+		cardName={card.name}
+		overrideClass="origin-top self-center scale-50 md:scale-75"
+	/>
 	<div class="absolute flex size-full items-end">
 		<strong class="text-xs md:text-base">
 			{card.name || 'No name'}

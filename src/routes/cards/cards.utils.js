@@ -1,4 +1,5 @@
-export const defaultCode = '<div class="size-full bg-white text-black">\n\n</div>';
+export const defaultCode =
+	'<div class="container">\n\n</div>\n\n<style>\n.container {\nwidth:100%;\nheight:100%;\nbackground-color: white;\ncolor:black;\n}\n</style>';
 
 export const sizes = {
 	vistaPrintStandard: {
@@ -10,6 +11,3 @@ export const sizes = {
 		height: '6.5cm'
 	}
 };
-
-export const unsavedClass =
-	'shrink-0 border border-black border-dashed dark:border-white overflow-hidden';

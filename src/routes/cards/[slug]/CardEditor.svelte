@@ -3,26 +3,18 @@
 	import { Spinner } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	import DOMPurify from 'dompurify';
-	import domtoimage from 'dom-to-image';
-	import { sizes, unsavedClass } from '../cards.utils';
+	import { sizes } from '../cards.utils';
+	import CardFrame from '../CardFrame.svelte';
 
 	export let title;
 	export let size;
 	export let defaultValue;
-	export let cardName;
 
 	const editorHeight = '300px';
-	const containerId = 'container';
+	let frame;
 
 	export const download = async () => {
-		const element = document.getElementById(containerId);
-		element.className = 'overflow-hidden';
-		const dataUrl = await domtoimage.toPng(element);
-		element.className = unsavedClass;
-		const link = document.createElement('a');
-		link.download = `${cardName}-${title}-${sizes[size].width}-${sizes[size].height}.png`;
-		link.href = dataUrl;
-		link.click();
+		await frame.download();
 	};
 
 	export const getValue = () => {
@@ -46,10 +38,8 @@
 		}
 	});
 
-	$: topWrapper = `<div id="${containerId}" style="width:${sizes[size].width}; height:${sizes[size].height}">`;
+	$: topWrapper = `<div style="width:${sizes[size].width}; height:${sizes[size].height}">`;
 	const bottomWrapper = '</div>';
-
-	const unsavedWrapperClass = `class="${unsavedClass}" >`;
 
 	let code = defaultValue;
 </script>
@@ -60,9 +50,7 @@
 			{title}
 		</h2>
 		{#if purifyHTML}
-			{@html purifyHTML.sanitize(
-				topWrapper.replace('>', unsavedWrapperClass) + code + bottomWrapper
-			)}
+			<CardFrame bind:this={frame} purifiedCode={purifyHTML.sanitize(code)} {...$$props} />
 		{/if}
 	</div>
 	<div class="grow">
