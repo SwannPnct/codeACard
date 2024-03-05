@@ -28,7 +28,7 @@
 	</div>
 	<LabeledContainer
 		label="Try it:"
-		overrideClass="z-[999] bg-white dark:bg-gray-800 flex flex-col items-center shadow-xl "
+		overrideClass="z-[999] border-black dark:border-white bg-white dark:bg-gray-800 flex flex-col items-center shadow-xl "
 	>
 		<SigninWithGithub />
 	</LabeledContainer>
