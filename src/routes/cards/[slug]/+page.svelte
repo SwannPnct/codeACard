@@ -4,7 +4,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import { defaultCode } from '../cards.utils';
 	import { DownloadSolid, TrashBinSolid } from 'flowbite-svelte-icons';
-	import LabeledContainer from './LabeledContainer.svelte';
+	import LabeledContainer from '$lib/components/LabeledContainer.svelte';
 	import { goto } from '$app/navigation';
 	import Form from '$lib/components/Form.svelte';
 
@@ -107,10 +107,9 @@
 	<LabeledContainer label="Help" overrideClass="break-words max-w-[600px]">
 		<p class="text-xs md:text-sm">
 			The cards have an initial and uneditable style used for specific sizing and to avoid the card
-			to shrink or grow. Those will be remove on download.
+			to shrink or grow. Those will be removed on download.
 			<br />
-			Code the rest, using plain HTML and
-			<a class="underline" href="https://tailwindcss.com/docs/installation">Tailwind CSS</a>.
+			Code the rest, using plain HTML and CSS.
 		</p>
 	</LabeledContainer>
 	<div class="flex flex-col gap-24">
