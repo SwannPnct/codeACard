@@ -2,7 +2,7 @@ import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/publi
 import { createBrowserClient, isBrowser, parse } from '@supabase/ssr';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ fetch, data, depends, url }) => {
+export const load = async ({ fetch, data, depends, url, route }) => {
 	depends('supabase:auth');
 
 	const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
@@ -31,5 +31,20 @@ export const load = async ({ fetch, data, depends, url }) => {
 		redirect('301', '/');
 	}
 
-	return { supabase, session };
+	const metadata = {
+		'/': {
+			title: 'codeACard',
+			description: 'Code your business card with HTML and CSS then download it.'
+		},
+		'/cards': {
+			title: 'codeACard - Your cards',
+			description: 'Add, access and edit your cards.'
+		}
+	};
+
+	return {
+		supabase,
+		session,
+		metadata: route.id?.includes('/cards') ? metadata['/cards'] : metadata['/']
+	};
 };

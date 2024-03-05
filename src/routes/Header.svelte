@@ -14,12 +14,14 @@
 	<DarkMode btnClass="ml-auto" />
 	<NavHamburger />
 	<NavUl class="ml-4">
-		{#if session}
-			<Form action="/auth?/signout">
-				<Button outline type="submit">Sign out</Button>
-			</Form>
-		{:else}
-			<SigninWithGithub />
-		{/if}
+		<li>
+			{#if session}
+				<Form action="/auth?/signout">
+					<Button outline type="submit">Sign out</Button>
+				</Form>
+			{:else}
+				<SigninWithGithub />
+			{/if}
+		</li>
 	</NavUl>
 </Navbar>
