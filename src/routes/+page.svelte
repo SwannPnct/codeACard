@@ -3,22 +3,33 @@
 	import exampleFrame from '$lib/assets/example-frame.webm';
 	import exampleCode from '$lib/assets/example-code.webm';
 	import LabeledContainer from '$lib/components/LabeledContainer.svelte';
+
+	let videoContainer;
+
+	const onScroll = () => {
+		if (videoContainer) videoContainer.style.top = `${window.scrollY / 4}px`;
+	};
 </script>
 
+<svelte:window on:scroll={onScroll} />
+
 <div class="relative mx-auto mt-16 flex w-fit flex-col items-center gap-24">
-	<div class="text-center">
+	<div class="z-[999] text-center">
 		<h1>Code your business card with HTML and CSS.</h1>
 		<h2 class="text-xl md:text-3xl">Then download it. Simple.</h2>
 	</div>
-	<LabeledContainer
-		label="Check it out"
-		overrideClass="flex flex-col items-center gap-24 lg:flex-row"
+	<div
+		bind:this={videoContainer}
+		style="top: 0;"
+		class="relative flex flex-col items-center gap-24 lg:flex-row"
 	>
-		<video src={exampleFrame} autoplay playsinline width="300" loop={true} />
-		<video src={exampleCode} autoplay playsinline width="500" loop={true} />
-	</LabeledContainer>
-	<div class="flex flex-col items-center gap-4 md:flex-row">
-		<span class="block">If you want to try it: </span>
-		<SigninWithGithub />
+		<video src={exampleFrame} autoplay muted playsinline loop width="300" />
+		<video src={exampleCode} autoplay muted playsinline loop width="500" />
 	</div>
+	<LabeledContainer
+		label="Try it:"
+		overrideClass="z-[999] bg-white dark:bg-gray-800 flex flex-col items-center shadow-xl "
+	>
+		<SigninWithGithub />
+	</LabeledContainer>
 </div>
