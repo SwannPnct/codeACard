@@ -9,6 +9,13 @@
 	const onScroll = () => {
 		if (videoContainer) videoContainer.style.top = `${window.scrollY / 4}px`;
 	};
+
+	const videoProps = {
+		autoplay: true,
+		muted: true,
+		playsinline: true,
+		loop: true
+	};
 </script>
 
 <svelte:window on:scroll={onScroll} />
@@ -23,8 +30,8 @@
 		style="top: 0;"
 		class="relative flex flex-col items-center gap-24 lg:flex-row"
 	>
-		<video src={exampleFrame} autoplay muted playsinline loop width="300" />
-		<video src={exampleCode} autoplay muted playsinline loop width="500" />
+		<video src={exampleFrame} width="300" {...videoProps} />
+		<video src={exampleCode} width="500" {...videoProps} />
 	</div>
 	<LabeledContainer
 		label="Try it:"
