@@ -29,6 +29,7 @@
 		bind:this={videoContainer}
 		style="top: 0;"
 		class="relative flex flex-col items-center gap-24 lg:flex-row"
+		data-testid="video-container"
 	>
 		<video src={exampleFrame} width="300" {...videoProps} />
 		<video src={exampleCode} width="500" {...videoProps} />

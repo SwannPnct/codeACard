@@ -1,27 +1,11 @@
 <script>
-	import { Button, Spinner, Modal } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher();
+	import { Button, Spinner } from 'flowbite-svelte';
 
 	export let loading = false;
 	export let loadingMessage = '';
-	export let confirm = false;
-	export let confirmMessage = 'Are you sure?';
-
-	let openModal = false;
-
-	const onClick = (e) => {
-		if (confirm) {
-			e.preventDefault();
-			openModal = true;
-		} else {
-			dispatch('click');
-		}
-	};
 </script>
 
-<Button {...$$restProps} on:click={onClick}>
+<Button {...$$restProps} on:click>
 	{#if loading}
 		<Spinner class="me-3" size="4" color="white" />
 	{/if}
@@ -31,13 +15,3 @@
 		<slot />
 	{/if}
 </Button>
-
-<Modal bind:open={openModal} autoclose size="sm" dismissable={false}>
-	<div class="w-full text-center">{confirmMessage}</div>
-	<svelte:fragment slot="footer">
-		<div class="flex w-full justify-around">
-			<svelte:self>No</svelte:self>
-			<svelte:self color="red" on:click>Yes</svelte:self>
-		</div>
-	</svelte:fragment>
-</Modal>
